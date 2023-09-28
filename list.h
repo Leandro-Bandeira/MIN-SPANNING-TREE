@@ -2,25 +2,30 @@
 #define LIST_H
 #include <iostream>
 
+typedef struct aresta{
+	int vertice_A;
+	int vertice_B;
+	int peso;
 
+}Aresta;
 
 class List{
 		
 	public:
 		List();
-		void insertEnd(List* vertice, int info);
+		void insertEnd(List* vertice, int info, bool isFirst);
 		~List();
-
-
-	private:
 		typedef struct element{
 			int info;
-			struct element* next; //Proximo elemento da lista
-			List* rep; //Repressentada da lista
+			struct element* next; // Proximo elemento da lista
+			List* rep; //Representante da lista
 		}Node;
-		int tamanho;
+
+		int pop();
 		Node* head; // Ponteiro para o primeiro elemento
 		Node* tail; // Ponteiro para o ultimo  elemento
+		int tamanho;
+	private:
 
 
 

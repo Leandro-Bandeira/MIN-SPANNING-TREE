@@ -10,7 +10,7 @@ List::List(){
 	this->head = NULL;	
 }
 
-void List::insertEnd(List* data, int info){
+void List::insertEnd(List* data, int info, bool isFirst){
 	
 	Node* vertice = new Node();
 
@@ -37,5 +37,20 @@ void List::insertEnd(List* data, int info){
 	}
 	this->tamanho++;
 	this->tail = vertice;
-	vertice->rep = data;
+	if(isFirst)
+		vertice->rep = data;
+}
+
+int List::pop(){
+	
+	Node* vertice = this->head;
+	this->head = this->head->next;
+	if(tamanho == 1){
+
+		this->tail = this->head->next;
+	}
+	
+	this->tamanho--;
+	delete vertice;
+	return vertice->info;
 }
