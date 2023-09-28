@@ -4,7 +4,7 @@
 #include "list.h"
 
 
-Kruskal::Kruskal(std::vector<std::vector<int>*>* grafo){
+Kruskal::Kruskal(std::vector<std::vector<int> >* grafo){
 
 	this->grafo = grafo;
 }
