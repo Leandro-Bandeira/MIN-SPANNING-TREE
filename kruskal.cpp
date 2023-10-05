@@ -9,6 +9,7 @@ Kruskal::Kruskal(std::vector<std::vector<int> >* grafo){
 	this->grafo = grafo;
 	this->vertices = new std::vector < Node*>(grafo->size());
 	result = NULL;
+	this->caminhoValue = 0;
 
 }
 
@@ -42,7 +43,7 @@ List* Kruskal::algorithmKruskal(){
 	/* Função lambda responsável pela comparação em ordem não decrescente	*/
 	auto comp = [](const Aresta& a, const Aresta& b){
 
-		return a.peso <= b.peso;
+		return a.peso >= b.peso;
 	};
 
 	//decltype pega a função sem reavaliar seu valor
@@ -61,6 +62,8 @@ List* Kruskal::algorithmKruskal(){
 			aresta.vertice_A = i;
 			aresta.vertice_B = j;
 			aresta.peso = (this->grafo->at(i))[j];
+			if (aresta.peso == 0)
+				continue;
 			std::cout << "Peso da aresta(" << i << " -> " << j << "): " << aresta.peso << std::endl;
 			arestasOrdenadas.push(aresta);
 		}
@@ -69,13 +72,19 @@ List* Kruskal::algorithmKruskal(){
 	
 	while(!arestasOrdenadas.empty()) {
 		Aresta aresta = arestasOrdenadas.top();
+		std::cout << "Aresta Peso: " << aresta.peso << std::endl;
 		int vertice_A = aresta.vertice_A;
 		int vertice_B = aresta.vertice_B;
 		Node* nodeVertice_A = this->vertices->at(vertice_A);
 		Node* nodeVertice_B = this->vertices->at(vertice_B);
 		
 		if(findSet(nodeVertice_A) != findSet(nodeVertice_B)){
+			std::cout << "Uniao dos vertices: " << nodeVertice_A->info << " e " << nodeVertice_B->info << std::endl;
 			result = unionList(nodeVertice_A, nodeVertice_B);
+			this->caminhoValue += aresta.peso;
+		}
+		else{
+			std::cout<< "Forma um ciclo" << std::endl;
 		}
 		arestasOrdenadas.pop();
 	}
@@ -97,6 +106,8 @@ void Kruskal::caminho(){
 		
 		tamanho++;
 	}
+	std::cout << std::endl;
+	std::cout << "O valor da solucao eh: " << this->caminhoValue << std::endl; 
 
 }
 

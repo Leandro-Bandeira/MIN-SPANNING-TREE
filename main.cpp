@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <cstdlib>
+#include <sstream>
 #include "list.h"
 
 std::vector < std::vector < int > > * leitorInstancia(char* instanciaName){
@@ -19,15 +20,16 @@ std::vector < std::vector < int > > * leitorInstancia(char* instanciaName){
 
 	while(std::getline(*arquivo, linha)){
 		std::vector < int > arestaValores;
+		std::stringstream dadosLinha(linha);
 		arestaValores.clear();
 
-		for(int i = 0; i < linha.size(); i++){
-			if(linha[i] != ' '){
+		while(std::getline(dadosLinha, valor, ' ')){
+			
+			std::string::size_type sz;
 
-				arestaValores.push_back(linha[i] - '0');
-			}
-
+			arestaValores.push_back(std::stod(valor, &sz));
 		}
+
 		grafo->push_back(arestaValores);
 
 	}
@@ -62,9 +64,7 @@ int main(int argc, char** argv){
 		std::cout << std::endl;
 	}	
 	Kruskal kruskal(grafo);
-	std::cout << "inicializou" << std::endl;
 	List* result = kruskal.algorithmKruskal();
 	kruskal.caminho();
-	std::cout << "Tamanho do resultado: " << result->tamanho;
 	return 0;
 }

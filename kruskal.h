@@ -23,6 +23,7 @@ class Kruskal : public List{
 		std::vector < std::vector < int > >* grafo;
 		std::list < List* > *representantes; // Armazena todos os conjuntos que são criados no makeSet
 		List* result;
+		int caminhoValue;
 };
 
 #endif
