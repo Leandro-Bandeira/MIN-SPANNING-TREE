@@ -21,7 +21,7 @@ class List{
 			List* rep; //Representante da lista
 		}Node;
 
-		int pop();
+		int top();
 		Node* head; // Ponteiro para o primeiro elemento
 		Node* tail; // Ponteiro para o ultimo  elemento
 		int tamanho;

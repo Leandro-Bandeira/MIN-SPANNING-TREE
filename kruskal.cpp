@@ -12,10 +12,15 @@ Kruskal::Kruskal(std::vector<std::vector<int> >* grafo){
 
 }
 
+
+Kruskal::~Kruskal(){
+
+}
 void Kruskal::makeSet(){
 	
 	int qVertices = this->grafo->size();
-	
+	std::cout << "Tamanho do grafo: " << qVertices << std::endl;
+	std::cout << "Tamanho de vertices: " << this->vertices->size() << std::endl;
 	for(int i = 0; i < qVertices; i++){
 		
 		List* rep = new List();
@@ -24,15 +29,15 @@ void Kruskal::makeSet(){
 			std::cout << "Nao foi possivel criar o representante" << std::endl;
 		}
 		rep->insertEnd(rep, i, 1); // O(1) porque sempre esstamos adicionando o primeiro elemento
-		this->representantes->push_front(rep); // O(1) pois é uma lista encadeada então na teoria so precisamos alterar os valores das regioes de memoria
 		this->vertices->at(i) = rep->head; //Adiciona inicialmente cada vertice
+		std::cout << "Criado o vertice: " << this->vertices->at(i)->info << std::endl;
 	}
 }
 
 List* Kruskal::algorithmKruskal(){
 	
 	makeSet();
-	
+	std::cout << "Fez o makeset" << std::endl;	
 	
 	/* Função lambda responsável pela comparação em ordem não decrescente	*/
 	auto comp = [](const Aresta& a, const Aresta& b){
@@ -44,7 +49,6 @@ List* Kruskal::algorithmKruskal(){
 	std::priority_queue< Aresta, std::vector<Aresta>,decltype(comp) > arestasOrdenadas(comp);
 	/* Percorrendo as arestas	*/
 	int qVertices = this->grafo->size();
-
 	for(int i = 0; i < qVertices; i++){
 		
 		
@@ -57,19 +61,19 @@ List* Kruskal::algorithmKruskal(){
 			aresta.vertice_A = i;
 			aresta.vertice_B = j;
 			aresta.peso = (this->grafo->at(i))[j];
+			std::cout << "Peso da aresta(" << i << " -> " << j << "): " << aresta.peso << std::endl;
 			arestasOrdenadas.push(aresta);
 		}
 
 	}
 	
-
 	while(!arestasOrdenadas.empty()) {
 		Aresta aresta = arestasOrdenadas.top();
 		int vertice_A = aresta.vertice_A;
 		int vertice_B = aresta.vertice_B;
 		Node* nodeVertice_A = this->vertices->at(vertice_A);
 		Node* nodeVertice_B = this->vertices->at(vertice_B);
-
+		
 		if(findSet(nodeVertice_A) != findSet(nodeVertice_B)){
 			result = unionList(nodeVertice_A, nodeVertice_B);
 		}
@@ -80,6 +84,21 @@ List* Kruskal::algorithmKruskal(){
 
 }
 
+void Kruskal::caminho(){
+
+	Node* head = result->head;
+
+	int tamanho = 0;
+	int peso = 0;
+
+	while(tamanho < result->tamanho){
+		std::cout << head->info << "->";
+		head = head->next;
+		
+		tamanho++;
+	}
+
+}
 
 List* Kruskal::unionList(Node* verticeA, Node* verticeB){
 	List* rep1 = verticeA->rep;
@@ -99,9 +118,12 @@ List* Kruskal::unionList(Node* verticeA, Node* verticeB){
 		repSecundario = rep2;
 
 	}
-
+	std::cout << "Antes do while do union" << std::endl;
 	while(repSecundario->tamanho){
-		repPrimario->insertEnd(NULL ,repSecundario->pop(), 0);
+		std::cout << "antes do top" << std::endl;
+		int verticeInfo = repSecundario->top();
+		std::cout << "Vertice retirado do inicio" << std::endl;
+		repPrimario->insertEnd(repPrimario ,verticeInfo, 1);
 	}
 	return repPrimario;
 }

@@ -16,6 +16,8 @@ class Kruskal : public List{
 		void makeSet();
 		List* unionList(Node* nodeA, Node* nodeB);
 		List* findSet(Node* node);
+		void caminho();
+		~Kruskal();
 	private:
 		std::vector < Node*> *vertices;
 		std::vector < std::vector < int > >* grafo;

@@ -10,6 +10,10 @@ List::List(){
 	this->head = NULL;	
 }
 
+List::~List(){
+
+}
+
 void List::insertEnd(List* data, int info, bool isFirst){
 	
 	Node* vertice = new Node();
@@ -26,6 +30,7 @@ void List::insertEnd(List* data, int info, bool isFirst){
 		this->head = vertice;
 	}
 	else{
+		std::cout << "entrou aqui" << std::endl;
 		Node* aux = this->head;
 		
 		// Caminha até o ultimo nó da lista
@@ -39,18 +44,25 @@ void List::insertEnd(List* data, int info, bool isFirst){
 	this->tail = vertice;
 	if(isFirst)
 		vertice->rep = data;
+
+	std::cout << "Adicionou ao fim" << std::endl;
 }
 
-int List::pop(){
-	
+int List::top(){
+	std::cout << "entrou no top" << std::endl;	
 	Node* vertice = this->head;
+	std::cout << "here1" << std::endl;
+	int verticeInfo = vertice->info;
 	this->head = this->head->next;
+	std::cout << "here2" << std::endl;
 	if(tamanho == 1){
-
-		this->tail = this->head->next;
+		std::cout<< "here2.5" << std::endl;
+		this->tail = NULL;
+		std::cout << "here2.6" << std::endl;
 	}
-	
+	std::cout << "here3" << std::endl;	
 	this->tamanho--;
+	std::cout << "antes do delete" << std::endl;
 	delete vertice;
-	return vertice->info;
+	return verticeInfo;
 }
