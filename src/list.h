@@ -19,6 +19,7 @@ class List{
 			int info;
 			struct element* next; // Proximo elemento da lista
 			List* rep; //Representante da lista
+			Aresta arestaPertence;
 		}Node;
 
 		int top();

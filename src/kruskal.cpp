@@ -82,6 +82,8 @@ List* Kruskal::algorithmKruskal(){
 			std::cout << "Uniao dos vertices: " << nodeVertice_A->info << " e " << nodeVertice_B->info << std::endl;
 			result = unionList(nodeVertice_A, nodeVertice_B);
 			this->caminhoValue += aresta.peso;
+			nodeVertice_A->arestaPertence = aresta;
+			nodeVertice_B->arestaPertence = aresta;
 		}
 		else{
 			std::cout<< "Forma um ciclo" << std::endl;
@@ -101,7 +103,10 @@ void Kruskal::caminho(){
 	int peso = 0;
 
 	while(tamanho < result->tamanho){
-		std::cout << head->info << "->";
+		Aresta aresta = head->arestaPertence;
+		int vertice_a = aresta.vertice_A;
+		int vertice_b = aresta.vertice_B;
+		std::cout << "(" << vertice_a  << "->" << vertice_b << ") ";
 		head = head->next;
 		
 		tamanho++;
