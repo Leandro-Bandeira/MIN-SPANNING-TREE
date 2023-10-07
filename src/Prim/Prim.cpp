@@ -6,6 +6,7 @@
 Prim::Prim(ListAdj* list){
 	
 	this->listadj = list;
+	this->result = 0;
 
 }
 
@@ -48,21 +49,26 @@ void Prim::algorithm(){
 		Node* nodeAux = nodeU->adj; //Acessa o primeiro adjacente
 		
 		while(nodeAux != NULL){
-			
+			std::cout << "verticeA: " << nodeData.vertice << std::endl;
+		
 			int adjVertice = nodeAux->vertice;
 			int peso = nodeAux->peso;
 			int chave = vertices[adjVertice].chave;
-			
+			std::cout << "verticeB: " << adjVertice << std::endl;
+			std::cout << "Peso: " << peso << std::endl;
 			if(verticesInQueue[adjVertice] and peso < chave){
 				vertices[adjVertice].pai = nodeU;
 				vertices[adjVertice].chave = peso;
+				result += peso;
 				queueVertices.push(vertices[adjVertice]); //Adiciona o vertice novo na priority queue
 			}
 			nodeAux = nodeAux->adj;
+			getchar();
 			
 		}
 		
 		queueVertices.pop();
+		verticesInQueue[nodeData.vertice] = false;
 	
 	}
 }

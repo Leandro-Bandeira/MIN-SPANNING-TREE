@@ -8,6 +8,7 @@ class Prim{
 	public:
 		Prim(ListAdj* list);
 		void algorithm();
+		int result;
 	private:
 		ListAdj* listadj;
 };

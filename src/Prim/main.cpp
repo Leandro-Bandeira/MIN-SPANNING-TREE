@@ -2,7 +2,7 @@
 #include "ListAdj.h"
 #include <fstream>
 #include <sstream>
-
+#include "Prim.h"
 ListAdj* leitorInstancia(std::string instanciaName){
 	std::string linha;
 	std::string valor;
@@ -56,6 +56,8 @@ int main(int argc, char** argv){
 		}
 		std::cout << std::endl;
 	}
-
+	Prim prim(listAdj);
+	prim.algorithm();
+	std::cout << "O valor eh: " << prim.result << std::endl;
 	return 0;
 }
