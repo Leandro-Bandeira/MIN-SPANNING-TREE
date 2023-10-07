@@ -27,11 +27,11 @@ Node* ListAdj::getNode(int indiceVertice){
 }
 
 // Função responsável por adicionar um nó adjacente a um determinado no
-void ListAdj::insertAdj(int indiceVertice, int indiceAdjVertice){
+void ListAdj::insertAdj(int indiceVertice, int indiceAdjVertice, int peso){
 	Node* nodeAdj = new Node();
 	nodeAdj->vertice = indiceAdjVertice;
 	nodeAdj->adj = NULL;
-
+	nodeAdj->peso = peso;
 
 	Node* node = this->nodes->at(indiceVertice);
 	Node* aux = node;

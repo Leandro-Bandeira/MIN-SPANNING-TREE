@@ -19,8 +19,9 @@ ListAdj* leitorInstancia(std::string instanciaName){
 		while(std::getline(dadosLinha, valor, ' ')){
 				
 			std::string::size_type sz;
-			if(std::stod(valor, &sz) != 0){
-				listAdj->insertAdj(i, j);
+			int peso = std::stod(valor, &sz);
+			if(peso != 0){
+				listAdj->insertAdj(i, j, peso);
 			}
 			j++;
 		}
@@ -50,7 +51,7 @@ int main(int argc, char** argv){
 		std::cout << node->vertice << " ";
 		Node* nodeAdj = node->adj;
 		while(nodeAdj != NULL){
-			std::cout << nodeAdj->vertice << " ";
+			std::cout << nodeAdj->vertice << " " << nodeAdj->peso << " ";
 			nodeAdj = nodeAdj->adj;
 		}
 		std::cout << std::endl;
