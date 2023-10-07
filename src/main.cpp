@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <sstream>
 #include "list.h"
-
+#include <bits/stdc++.h>
 std::vector < std::vector < int > > * leitorInstancia(char* instanciaName){
 	
 	std::string linha;
@@ -62,9 +62,14 @@ int main(int argc, char** argv){
 			std::cout << vertice[i] << " ";
 		}
 		std::cout << std::endl;
-	}	
+	}
+	time_t start, end;
+	time(&start);
 	Kruskal kruskal(grafo);
 	List* result = kruskal.algorithmKruskal();
+	time(&end);
+	std::cout << kruskal.caminhoValue << std::endl;
+	std::cout << std::fixed << double(end-start) << std::setprecision(5) << std::endl;
 	kruskal.caminho();
 	return 0;
 }

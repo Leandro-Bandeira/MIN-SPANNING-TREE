@@ -17,13 +17,14 @@ class Kruskal : public List{
 		List* unionList(Node* nodeA, Node* nodeB);
 		List* findSet(Node* node);
 		void caminho();
+
+		int caminhoValue;
 		~Kruskal();
 	private:
 		std::vector < Node*> *vertices;
 		std::vector < std::vector < int > >* grafo;
 		std::list < List* > *representantes; // Armazena todos os conjuntos que são criados no makeSet
 		List* result;
-		int caminhoValue;
 };
 
 #endif
