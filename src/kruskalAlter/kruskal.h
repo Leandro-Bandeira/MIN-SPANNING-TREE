@@ -12,6 +12,7 @@ class Kruskal{
 		int findSet(int vertice);
 		int setUnion(int vertice_a, int vertice_b);
 		void algorithm();
+		int result;
 	private:
 		Tree* tree;
 		std::vector < std::vector < int>>*grafo;

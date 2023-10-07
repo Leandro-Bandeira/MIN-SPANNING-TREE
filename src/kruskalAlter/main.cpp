@@ -61,6 +61,14 @@ int main(int argc, char** argv){
 			std::cout << vertice[i] << " ";
 		}
 		std::cout << std::endl;
-	}	
+	
+	}
+	int qVertices = grafo->size();
+	std::cout << qVertices << std::endl;
+	Tree* tree = new Tree(qVertices);
+	Kruskal kruskal(tree, grafo);
+	
+	kruskal.algorithm();
+	std::cout << "O resultado eh: " << kruskal.result << std::endl;
 	return 0;
 }

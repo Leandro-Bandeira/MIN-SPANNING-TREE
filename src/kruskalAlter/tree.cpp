@@ -7,7 +7,6 @@
 Tree::Tree(int qVertices){
 
 	this->nodes = new std::vector < std::pair<int,int> > (qVertices);
-	this->nodes->clear();
 }
 
 

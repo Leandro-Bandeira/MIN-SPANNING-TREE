@@ -5,6 +5,7 @@ Kruskal::Kruskal(Tree* tree,std::vector<std::vector<int>>*grafo ){
 
 	this->tree = tree;
 	this->grafo = grafo;
+	this->result = 0;
 }
 
 
@@ -40,30 +41,30 @@ int Kruskal::findSet(int vertice){
 		int father = this->tree->getFather(i);
 		int raiz = findSet(father);
 		this->tree->setFather(i, raiz);
+		return raiz;
 	} 
 }
 
 // Na função setUnion temos que encontrar a raiz de ambos os vertices
 // Dito isso temos que chamar a função find-set para cada vertice e então
 // verificar o rank de cada raiz, a raiz de rank menor terá o pai como sendo
-// a raiz de rank maior
+// a raiz de rank maior para construir arvores mais balanceadas
 int Kruskal::setUnion(int vertice_a, int vertice_b){
 	
 	int raiz_a = findSet(vertice_a);
 	int raiz_b = findSet(vertice_b);
-		
 	if (raiz_a == raiz_b){
-
-		return -1;
+		return 0;
 	}
 	int rank_a = this->tree->getRank(raiz_a);
 	int rank_b = this->tree->getRank(raiz_b);
 
-	int vertice_maiorRank = rank_a <= rank_b ? rank_b : rank_a;
-	int vertice_menorRank = rank_a <= rank_b ? rank_a : rank_b;
-	
-	// Talvez isso esteja certo???
+	int vertice_maiorRank = rank_a <= rank_b ? raiz_b : raiz_a;
+	int vertice_menorRank = rank_a <= rank_b ? raiz_a : raiz_b;
+	std::cout << vertice_maiorRank << " " << vertice_menorRank << std::endl;	
+
 	this->tree->setFather(vertice_menorRank, vertice_maiorRank);
+	this->tree->setRank(vertice_maiorRank, this->tree->getRank(vertice_menorRank));
 	return 1;
 
 }
@@ -84,9 +85,10 @@ void Kruskal::algorithm(){
 	std::priority_queue< Aresta, std::vector<Aresta>,decltype(comp) > arestasOrdenadas(comp);
 	/* Percorrendo as arestas	*/
 	int qVertices = this->tree->getSize();
-	int col = qVertices;
 	for(int i = 0; i < qVertices; i++){
 		
+		int col = this->grafo->at(i).size();
+
 		for(int j = 0; j < col; j++){
 		
 			/* Cria-se a aresta e então adiciona na priority_queue	*/
@@ -101,15 +103,22 @@ void Kruskal::algorithm(){
 		}
 
 	}
-
+	
+	std::cout << "here" << std::endl;
 	while(!arestasOrdenadas.empty()){
 		Aresta aresta = arestasOrdenadas.top();
+		std::cout << aresta.peso << std::endl;
 		int vertice_a = aresta.vertice_A;
-		int vertice_b = aresta.vertice_A;
-
-		int result = setUnion(vertice_a, vertice_b);
-
+		int vertice_b = aresta.vertice_B;
+		
+		int resultUnion = setUnion(vertice_a, vertice_b);
+		if (resultUnion){
+			
+			result += aresta.peso;
+		}
+		
 		arestasOrdenadas.pop();
+
 	}
 
 }
