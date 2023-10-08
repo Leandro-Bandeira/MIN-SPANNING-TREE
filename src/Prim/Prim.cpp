@@ -1,6 +1,6 @@
 #include "Prim.h"
 #include <queue>
-
+#include <algorithm>
 
 
 Prim::Prim(ListAdj* list){
@@ -30,17 +30,23 @@ void Prim::algorithm(){
 
 	// Agora devemos inicializar uma fila de prioridade baseada no valor da chave
 	// Vamos iniciar a fila do menor para o maior valor em ordem nao decrescente
+	
 	auto cmp = [](const NodeData &a, const NodeData &b){
 			
 		return a.chave >= b.chave;
 	};
-
+	
+	
 	std::priority_queue<NodeData,std::vector<NodeData>, decltype(cmp) > queueVertices(cmp);
 
 	for(int i = 0; i < qVertices; i++){
 		queueVertices.push(vertices[i]);
 	}
 	
+	
+	std::vector < NodeData > queueVertices = vertices;
+	std::make_heap(queueVertices.begin(), queueVertices.end(), cmp());
+
 	while(!queueVertices.empty()){
 		
 		NodeData nodeData = queueVertices.top();
