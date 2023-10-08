@@ -7,6 +7,9 @@
 #include <sstream>
 #include "list.h"
 #include <bits/stdc++.h>
+
+/* Função responsável por realizar a leitura de instancia
+ * e retornar um grafo na forma de matriz de adjacencia	*/
 std::vector < std::vector < int > > * leitorInstancia(char* instanciaName){
 	
 	std::string linha;
