@@ -16,7 +16,6 @@ void Prim::algorithm(){
 	int qVertices = listadj->getSize();
 	std::vector < NodeData >vertices(qVertices);
 	// O valor armazenado no vetor indicar se o indice está ou não na queue
-	// se verticesInQueue[1] = false, logo o vertice 1 não está na queue
 	std::vector < bool > verticesInQueue(qVertices);
 
 	for(int i = 0; i < qVertices; i++){
@@ -32,22 +31,6 @@ void Prim::algorithm(){
 	// Agora devemos inicializar uma fila de prioridade baseada no valor da chave
 	// Vamos iniciar a fila do menor para o maior valor em ordem nao decrescente
 
-	/*
-	auto cmp = [](const NodeData &a, const NodeData &b){
-			
-		return a.chave >= b.chave;
-	};
-	
-	*/
-
-	/*
-	 
-	std::priority_queue<NodeData,std::vector<NodeData>, decltype(cmp) > queueVertices(cmp);
-
-	for(int i = 0; i < qVertices; i++){
-		queueVertices.push(vertices[i]);
-	}
-	*/
 	
 	std::vector < NodeData > queueVertices = vertices;
 	
@@ -109,12 +92,10 @@ void Prim::algorithm(){
 	for(int i = 0; i < qVertices; i++){
 
 		Node* node = listadj->getNode(i);
-		Node* nodeAux = node->adj;
-		
-		while(nodeAux != NULL){
-			result += nodeAux->peso;
-			nodeAux = nodeAux->adj;
-		}
+		std::cout << "node vertice: " << node->vertice << std::endl;
+		std::cout << "Peso: " << node->peso << std::endl;
+		result += node->peso;	
+
 	}
 	
 
