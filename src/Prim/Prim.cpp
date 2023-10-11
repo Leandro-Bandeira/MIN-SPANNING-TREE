@@ -21,13 +21,14 @@ void Prim::algorithm(){
 
 	for(int i = 0; i < qVertices; i++){
 		vertices[i].vertice = i;
-		vertices[i].chave = 9999999;
+		vertices[i].chave = i;
 		vertices[i].pai = NULL;
 		verticesInQueue[i] = true;
 
 	}
 	// Vamos iniciar como a raiz sendo sempre zero inicialmente
 	vertices[0].chave = 0;
+	
 
 	// Agora devemos inicializar uma fila de prioridade baseada no valor da chave
 	// Vamos iniciar a fila do menor para o maior valor em ordem nao decrescente
@@ -35,6 +36,11 @@ void Prim::algorithm(){
 	Heap priority_queue = Heap(vertices);
 	priority_queue.heapMinSort();
 
+	while(!priority_queue.empty()){
+		NodeData nodeData = priority_queue.top();
+		std::cout << "chave: " << nodeData.chave << std::endl;
+		priority_queue.pop_top();
+	}
 	while(!priority_queue.empty()){
 		
 		NodeData nodeData = priority_queue.top();
