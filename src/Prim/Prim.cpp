@@ -10,6 +10,7 @@ Prim::Prim(ListAdj* list){
 
 }
 
+
 void Prim::algorithm(){
 	
 	int qVertices = listadj->getSize();
@@ -30,26 +31,35 @@ void Prim::algorithm(){
 
 	// Agora devemos inicializar uma fila de prioridade baseada no valor da chave
 	// Vamos iniciar a fila do menor para o maior valor em ordem nao decrescente
-	
+
+	/*
 	auto cmp = [](const NodeData &a, const NodeData &b){
 			
 		return a.chave >= b.chave;
 	};
 	
-	
+	*/
+
+	/*
+	 
 	std::priority_queue<NodeData,std::vector<NodeData>, decltype(cmp) > queueVertices(cmp);
 
 	for(int i = 0; i < qVertices; i++){
 		queueVertices.push(vertices[i]);
 	}
-	
+	*/
 	
 	std::vector < NodeData > queueVertices = vertices;
-	std::make_heap(queueVertices.begin(), queueVertices.end(), cmp());
+	
+	std::make_heap(queueVertices.begin(), queueVertices.end(), [](const NodeData& a, const NodeData& b) {
+					return a.chave >= b.chave;
+
+			});
 
 	while(!queueVertices.empty()){
 		
-		NodeData nodeData = queueVertices.top();
+		//NodeData nodeData = queueVertices.top();
+		NodeData nodeData = queueVertices.front();
 		// Vamos agora percorrer todos os nos adjacentes a esse vertice
 		Node* nodeU = listadj->getNode(nodeData.vertice);
 		Node* nodeAux = nodeU->adj; //Acessa o primeiro adjacente
@@ -66,14 +76,30 @@ void Prim::algorithm(){
 				vertices[adjVertice].pai = nodeU;
 				vertices[adjVertice].chave = peso;
 				result += peso;
-				queueVertices.push(vertices[adjVertice]); //Adiciona o vertice novo na priority queue
+				int i = 0;
+				for(NodeData element : queueVertices){
+					
+					if(element.vertice == adjVertice){
+						break;
+					}
+					i++;
+				}
+				queueVertices.erase(queueVertices.begin() + i);
+				queueVertices.push_back(vertices[adjVertice]); 
+				std::make_heap(queueVertices.begin(), queueVertices.end(), [](const NodeData& a, const NodeData& b) {
+						return a.chave >= b.chave;
+						});
 			}
 			nodeAux = nodeAux->adj;
-			getchar();
+			//getchar();
 			
 		}
 		
-		queueVertices.pop();
+		std::pop_heap(queueVertices.begin(), queueVertices.end(), [](const NodeData& a, const NodeData& b){
+				return a.chave >= b.chave;
+				});
+		queueVertices.pop_back();
+		std::cout << "Tamanho da priority: " << queueVertices.size() << std::endl;	
 		verticesInQueue[nodeData.vertice] = false;
 	
 	}
