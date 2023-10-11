@@ -63,7 +63,7 @@ void Prim::algorithm(){
 		// Vamos agora percorrer todos os nos adjacentes a esse vertice
 		Node* nodeU = listadj->getNode(nodeData.vertice);
 		Node* nodeAux = nodeU->adj; //Acessa o primeiro adjacente
-		
+		std::cout << "Chave do vertice atual: " << nodeData.chave << std::endl;	
 		while(nodeAux != NULL){
 			std::cout << "verticeA: " << nodeData.vertice << std::endl;
 		
@@ -75,11 +75,12 @@ void Prim::algorithm(){
 			if(verticesInQueue[adjVertice] and peso < chave){
 				vertices[adjVertice].pai = nodeU;
 				vertices[adjVertice].chave = peso;
-				result += peso;
+				std::cout << "O vertice: " << adjVertice << " entrou" << std::endl;
 				int i = 0;
 				for(NodeData element : queueVertices){
 					
 					if(element.vertice == adjVertice){
+						std::cout << "O vertice elimnado foi: " << element.vertice << std::endl;
 						break;
 					}
 					i++;
@@ -91,7 +92,7 @@ void Prim::algorithm(){
 						});
 			}
 			nodeAux = nodeAux->adj;
-			//getchar();
+			getchar();
 			
 		}
 		
@@ -103,4 +104,18 @@ void Prim::algorithm(){
 		verticesInQueue[nodeData.vertice] = false;
 	
 	}
+	
+	
+	for(int i = 0; i < qVertices; i++){
+
+		Node* node = listadj->getNode(i);
+		Node* nodeAux = node->adj;
+		
+		while(nodeAux != NULL){
+			result += nodeAux->peso;
+			nodeAux = nodeAux->adj;
+		}
+	}
+	
+
 }
