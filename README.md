@@ -1,2 +1,2 @@
-# Kruskal
-Algoritmo de Kruskal para a matéria de Análise e Projeto de Algoritmos
+# MIN SPANNING TREE
+Algoritmo de Kruskal(duas implementações) e Prim para resolver o problema da árvore geradora mínima.
