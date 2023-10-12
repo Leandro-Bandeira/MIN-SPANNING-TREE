@@ -44,7 +44,10 @@ void Prim::algorithm(){
 		// Vamos agora percorrer todos os nos adjacentes a esse vertice
 		Node* nodeU = listadj->getNode(nodeData.vertice);
 		Node* nodeAux = nodeU->adj; //Acessa o primeiro adjacente
-		
+		if(nodeAux->vertice == 54){
+			std::cout << "Achou" << std::endl;
+			getchar();
+		}	
 		while(nodeAux != NULL){
 		
 			int adjVertice = nodeAux->vertice;
