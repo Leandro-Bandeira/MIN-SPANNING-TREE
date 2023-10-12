@@ -15,6 +15,9 @@ class Heap{
 		bool empty();
 		void heapMinSort();
 		void pop_top();
+		void printHeap();
+		void decreaseKey(int vertice, NodeData&);
+
 	private:
 		std::vector<NodeData> nodes;
 		int tamanhoHeap;
