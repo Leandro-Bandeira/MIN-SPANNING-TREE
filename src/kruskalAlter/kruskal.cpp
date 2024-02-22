@@ -58,17 +58,46 @@ int Kruskal::setUnion(int vertice_a, int vertice_b){
 	}
 	int rank_a = this->tree->getRank(raiz_a);
 	int rank_b = this->tree->getRank(raiz_b);
+	
 
+	
 	int vertice_maiorRank = rank_a <= rank_b ? raiz_b : raiz_a;
 	int vertice_menorRank = rank_a <= rank_b ? raiz_a : raiz_b;
-	std::cout << vertice_maiorRank << " " << vertice_menorRank << std::endl;	
+		
 
 	this->tree->setFather(vertice_menorRank, vertice_maiorRank);
-	this->tree->setRank(vertice_maiorRank, this->tree->getRank(vertice_menorRank));
+	
+	
+	int newRank = 0;
+	if(this->tree->getRank(vertice_maiorRank) == 0){
+		newRank += 1;
+	}
+	else{
+		newRank = this->tree->getRank(vertice_maiorRank) + this->tree->getRank(vertice_menorRank);
+	}
+	
+
+	this->tree->setRank(vertice_maiorRank, newRank);
 	return 1;
 
 }
 
+void Kruskal::calculate_grau(){
+	
+	int qVertices = this->tree->getSize();
+
+	for(int  i = 0; i < qVertices; i++){
+		
+		int g = 0;
+		for(Aresta  aresta : arestasIn){
+			
+			if(aresta.vertice_A == i or aresta.vertice_B == i){
+				g++;
+			}
+		}
+		this->graus.push_back(std::make_pair(i, g));
+	}
+}
 void Kruskal::algorithm(){
 		
 	makeSet();
@@ -98,27 +127,34 @@ void Kruskal::algorithm(){
 			aresta.peso = (this->grafo->at(i))[j];
 			if (aresta.peso == 0)
 				continue;
-			std::cout << "Peso da aresta(" << i << " -> " << j << "): " << aresta.peso << std::endl;
+			
 			arestasOrdenadas.push(aresta);
 		}
 
 	}
 	
-	std::cout << "here" << std::endl;
+	
 	while(!arestasOrdenadas.empty()){
 		Aresta aresta = arestasOrdenadas.top();
-		std::cout << aresta.peso << std::endl;
+		
 		int vertice_a = aresta.vertice_A;
 		int vertice_b = aresta.vertice_B;
 		
 		int resultUnion = setUnion(vertice_a, vertice_b);
 		if (resultUnion){
-			
+			this->arestasIn.push_back(aresta);
 			result += aresta.peso;
 		}
 		
 		arestasOrdenadas.pop();
 
 	}
+	std::cout << "-----Arestas adicionadas-----" << std::endl;
+	for(int  i = 0; i < this->arestasIn.size(); i++){
+		std::cout << this->arestasIn[i].vertice_A << "--" << this->arestasIn[i].vertice_B << std::endl;
+	}
+	std::cout << "----------" << std::endl;
+	calculate_grau();
+
 
 }
